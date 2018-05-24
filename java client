@@ -1,1 +1,38 @@
+import java.io.*;
+import java.net.*;
 
+public class client
+{
+     public static void main(String[] args) throws Exception
+     {
+	String sentence,sentence1;
+	String modifiedSentence,modifiedSentence1,modifiedSentence2;
+
+	System.out.println("Enter text: ");
+
+	BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+
+	Socket clientSocket = new Socket("192.168.230.136", 2400);
+
+	DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+
+	BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+	sentence = inFromUser.readLine();
+  outToServer.writeBytes(sentence + '\n');
+  
+  sentence1 = inFromUser.readLine();
+  outToServer.writeBytes(sentence1 + '\n');
+  
+	modifiedSentence = inFromServer.readLine();
+	System.out.println("FROM ATIKAHSERVER: " + modifiedSentence);
+  
+  modifiedSentence1 = inFromServer.readLine();
+	System.out.println("FROM ATIKAHSERVER: " + modifiedSentence1);
+  
+  modifiedSentence2 = inFromServer.readLine();
+	System.out.println("FROM ATIKAHSERVER: " + modifiedSentence2);
+
+	clientSocket.close();
+	}
+}        
